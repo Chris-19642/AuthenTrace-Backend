@@ -15,11 +15,11 @@ public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_documento", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario idUsuario;
+    private Usuario usuario;
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
