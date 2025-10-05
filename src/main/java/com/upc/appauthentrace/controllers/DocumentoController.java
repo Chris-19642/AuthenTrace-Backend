@@ -3,6 +3,7 @@ package com.upc.appauthentrace.controllers;
 import com.upc.appauthentrace.dto.DocumentoDTO;
 import com.upc.appauthentrace.interfaces.IDocumentoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,12 +18,14 @@ public class DocumentoController {
 
     // 1. Subir temporal
     @PostMapping("/subir")
+    @PreAuthorize("hasRole('USUARIO')")
     public String subirDocumentoTemporal(@RequestParam("file") MultipartFile file) {
         return documentoServicio.subirDocumentoTemporal(file);
     }
 
     // 2. Cancelar temporal (botón X)
     @DeleteMapping("/cancelar/{nombreArchivo}")
+    @PreAuthorize("hasRole('USUARIO')")
     public String cancelarDocumentoTemporal(@PathVariable String nombreArchivo) {
         boolean eliminado = documentoServicio.cancelarDocumentoTemporal(nombreArchivo);
         return eliminado ? "Archivo eliminado" : "No existía el archivo";
@@ -31,6 +34,7 @@ public class DocumentoController {
 
     // 3. Guardar definitivo al verificar firma
     @PostMapping("/guardar/{idUsuario}")
+    @PreAuthorize("hasRole('USUARIO')")
     public DocumentoDTO guardarDefinitivo(@RequestParam String nombreArchivo,
                                           @PathVariable Long idUsuario) {
         return documentoServicio.guardarDefinitivo(nombreArchivo, idUsuario);

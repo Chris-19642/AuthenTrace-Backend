@@ -7,6 +7,7 @@ import com.upc.appauthentrace.interfaces.IActualizacionServicio;
 import com.upc.appauthentrace.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class ActualizacionController {
     private UsuarioRepositorio usuarioRepositorio;
 
     @PostMapping("/programar")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Actualizacion> programarActualizacion(
             @RequestBody ActualizacionDTO dto){
         Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));

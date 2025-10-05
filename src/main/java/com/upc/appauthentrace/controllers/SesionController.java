@@ -4,6 +4,7 @@ import com.upc.appauthentrace.dto.SesionDTO;
 import com.upc.appauthentrace.entidades.Sesione;
 import com.upc.appauthentrace.interfaces.ISesionServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -44,6 +45,7 @@ public class SesionController {
     public void eliminar(@PathVariable Long id) {sesionServicio.eliminar(id);};
 
     @GetMapping("/sesiones")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<SesionDTO> listarSesiones() { return  sesionServicio.listarSesiones();};
 
     @GetMapping("/sesiones/rango-fechas")

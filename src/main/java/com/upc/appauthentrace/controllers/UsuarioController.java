@@ -6,6 +6,7 @@ import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IUsuarioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UsuarioDTO> listarUsuarios() {
         return usuarioServicio.listarUsuarios();
     }
@@ -41,6 +43,7 @@ public class UsuarioController {
 
 
     @PutMapping("/usuario")
+    @PreAuthorize("hasRole('USUARIO')")
     public UsuarioDTO editar(@RequestBody UsuarioDTO usuarioDTO) {
         return usuarioServicio.editar(usuarioDTO);
     }
