@@ -17,13 +17,14 @@ public class Reporte {
     @Column(name = "id_reporte", nullable = false)
     private Integer id;
 
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario idUsuario;
+    private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_documento", nullable = false)
-    private Documento idDocumento;
+    private Documento documento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_grupo")

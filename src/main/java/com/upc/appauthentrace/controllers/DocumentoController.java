@@ -41,7 +41,7 @@ public class DocumentoController {
     }
 
     // Listados
-    @GetMapping
+    @GetMapping("/lista")
     public List<DocumentoDTO> listar() {
         return documentoServicio.listarDocumentos();
     }
@@ -51,10 +51,11 @@ public class DocumentoController {
         return documentoServicio.listarPorUsuario(idUsuario);
     }
 
-    // Eliminar desde BD (documento ya confirmado)
+    // Eliminar documento definitivo
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
+    public String eliminar(@PathVariable Long id) {
         documentoServicio.eliminarDocumento(id);
+        return "Documento eliminado correctamente";
     }
 }
 

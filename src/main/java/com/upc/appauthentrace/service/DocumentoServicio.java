@@ -45,7 +45,7 @@ public class DocumentoServicio implements IDocumentoServicio {
             Path ruta = Paths.get(TEMP_DIR + nombreArchivo);
 
             Files.write(ruta, file.getBytes());
-            return nombreArchivo; // solo se devuelve el nombre para luego decidir
+            return nombreArchivo; // solo se devuelve el nombre temporal
         } catch (IOException e) {
             throw new RuntimeException("Error al guardar el archivo temporal", e);
         }
@@ -80,10 +80,12 @@ public class DocumentoServicio implements IDocumentoServicio {
 
             Documento documento = new Documento();
             documento.setUsuario(usuario);
-            documento.setNombre(nombreArchivo);
-            documento.setTipoDocumento(Files.probeContentType(rutaFinal));
+            documento.setNombre(nombreArchivo.substring(nombreArchivo.indexOf("_") + 1)); // nombre original
+            String tipo = Files.probeContentType(rutaFinal);
+            documento.setTipoDocumento(tipo != null ? tipo : "application/pdf");
             documento.setRutaArchivo(rutaFinal.toString());
             documento.setFechaSubida(Instant.now());
+
 
             Documento guardado = documentoRepositorio.save(documento);
             return modelMapper.map(guardado, DocumentoDTO.class);
@@ -109,6 +111,14 @@ public class DocumentoServicio implements IDocumentoServicio {
 
     @Override
     public void eliminarDocumento(Long idDocumento) {
+
+        Documento doc = documentoRepositorio.findById(idDocumento)
+                .orElseThrow(() -> new RuntimeException("Documento no encontrado"));
+        try {
+            Files.deleteIfExists(Paths.get(doc.getRutaArchivo()));
+        } catch (IOException e) {
+            throw new RuntimeException("Error al eliminar archivo físico", e);
+        }
         documentoRepositorio.deleteById(idDocumento);
     }
 }

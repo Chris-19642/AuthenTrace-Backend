@@ -11,11 +11,8 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReporteDTO {
-    private Long idUsuario;
-    private Long idDocumento;
-    private Long idGrupo;
-    private String estadoFirma;
-    private Instant fechaGeneracion;
-    private String rutaReporte;
+public class FirmaDTO {
+    private Long id;
+    private String hashFirma;
+    private Instant fechaRegistro;
 }
