@@ -1,18 +1,15 @@
-package com.upc.appauthentrace.dto;
+package com.upc.appauthentrace.security.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActualizacionDTO {
+public class RoleDTO {
     private Long id;
-    private String version;
-    private LocalDate fechaProgramada;
+    private String name;
 }

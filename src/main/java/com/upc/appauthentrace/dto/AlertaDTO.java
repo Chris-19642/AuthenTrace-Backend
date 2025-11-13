@@ -14,16 +14,10 @@ import java.time.Instant;
 public class AlertaDTO {
 
     private Integer id;
-
     private String tipoActividad;
-
     private String descripcion;
-
     private Instant fecha;
-
     private String estado;
-
     private Long idUsuario;
-
     private String ipOrigen;
 }

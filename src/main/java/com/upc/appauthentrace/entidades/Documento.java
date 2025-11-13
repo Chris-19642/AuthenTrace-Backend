@@ -1,5 +1,6 @@
 package com.upc.appauthentrace.entidades;
 
+import com.upc.appauthentrace.security.entities.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class Documento {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
+    private User usuario;
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;

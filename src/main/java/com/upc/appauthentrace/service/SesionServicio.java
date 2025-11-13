@@ -2,10 +2,10 @@ package com.upc.appauthentrace.service;
 
 import com.upc.appauthentrace.dto.SesionDTO;
 import com.upc.appauthentrace.entidades.Sesione;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.ISesionServicio;
 import com.upc.appauthentrace.repositorios.SesionRepositorio;
-import com.upc.appauthentrace.repositorios.UsuarioRepositorio;
+import com.upc.appauthentrace.security.entities.User;
+import com.upc.appauthentrace.security.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class SesionServicio implements ISesionServicio {
     private SesionRepositorio sesionRepositorio;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private UserRepository userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -34,10 +34,10 @@ public class SesionServicio implements ISesionServicio {
     public SesionDTO registrar(SesionDTO sesionDTO) {
         Sesione sesion = modelMapper.map(sesionDTO, Sesione.class);
 
-        Usuario usuario = usuarioRepositorio.findById(sesionDTO.getIdUsuario())
+        User user = userRepository.findById(sesionDTO.getIdUsuario())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID " + sesionDTO.getIdUsuario()));
 
-        sesion.setIdUsuario(usuario);
+        sesion.setIdUsuario(user);
 
         return modelMapper.map(sesionRepositorio.save(sesion), SesionDTO.class);
     }
@@ -48,9 +48,9 @@ public class SesionServicio implements ISesionServicio {
                 .map(existing -> {
                     Sesione sesion = modelMapper.map(sesionDTO, Sesione.class);
 
-                    Usuario usuario = usuarioRepositorio.findById(sesionDTO.getIdUsuario())
+                    User user = userRepository.findById(sesionDTO.getIdUsuario())
                             .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID " + sesionDTO.getIdUsuario()));
-                    sesion.setIdUsuario(usuario);
+                    sesion.setIdUsuario(user);
 
                     Sesione guardado = sesionRepositorio.save(sesion);
                     return modelMapper.map(guardado, SesionDTO.class);

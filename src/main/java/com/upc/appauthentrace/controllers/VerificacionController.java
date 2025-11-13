@@ -13,7 +13,6 @@ public class VerificacionController {
     @Autowired
     private VerificacionServicio verificacionServicio;
 
-    // Puedes usar GET o POST; aquí uso GET para pruebas rápidas por query params
     @GetMapping("/firma")
     public ResponseEntity<ResultadoVerificacionDTO> verificarFirma(
             @RequestParam Long idDocumento,
@@ -23,5 +22,3 @@ public class VerificacionController {
         return ResponseEntity.ok(resultado);
     }
 }
-
-

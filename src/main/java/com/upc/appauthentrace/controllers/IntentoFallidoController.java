@@ -2,12 +2,9 @@ package com.upc.appauthentrace.controllers;
 
 import com.upc.appauthentrace.dto.IntentoFallidoDTO;
 import com.upc.appauthentrace.dto.SesionDTO;
-import com.upc.appauthentrace.dto.UsuarioDTO;
 import com.upc.appauthentrace.entidades.Intentosfallido;
 import com.upc.appauthentrace.entidades.Sesione;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IIntentoFallidoServicio;
-import com.upc.appauthentrace.interfaces.IUsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

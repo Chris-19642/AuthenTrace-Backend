@@ -3,7 +3,7 @@ package com.upc.appauthentrace.service;
 import com.upc.appauthentrace.dto.ReporteMensualDTO;
 import com.upc.appauthentrace.entidades.Intentosfallido;
 import com.upc.appauthentrace.entidades.Sesione;
-import com.upc.appauthentrace.interfaces.IReporteServicio;
+import com.upc.appauthentrace.interfaces.IReporteMensualServicio;
 import com.upc.appauthentrace.repositorios.IntentoFallidoRepositorio;
 import com.upc.appauthentrace.repositorios.SesionRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-    public class ReporteServicio implements IReporteServicio {
+    public class ReporteMensualServicio implements IReporteMensualServicio {
 
     @Autowired
     private SesionRepositorio sesionRepositorio;

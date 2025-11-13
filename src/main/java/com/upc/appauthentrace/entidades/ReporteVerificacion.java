@@ -1,5 +1,6 @@
 package com.upc.appauthentrace.entidades;
 
+import com.upc.appauthentrace.security.entities.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +11,8 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "reportes")
-public class Reporte {
+@Table(name = "reportes_verificacion")
+public class ReporteVerificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reporte", nullable = false)
@@ -20,7 +21,7 @@ public class Reporte {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
+    private User usuario;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_documento", nullable = false)

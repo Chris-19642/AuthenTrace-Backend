@@ -11,7 +11,8 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReporteDTO {
+public class ReporteVerificacionDTO {
+    private Integer id;
     private Long idUsuario;
     private Long idDocumento;
     private Long idGrupo;

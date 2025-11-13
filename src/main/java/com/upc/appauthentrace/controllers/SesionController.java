@@ -19,6 +19,7 @@ public class SesionController {
     public SesionDTO registrar(@RequestBody SesionDTO sesionDTO){
         return sesionServicio.registrar(sesionDTO);
     }
+
     @GetMapping("/sesion/{id}")
     public SesionDTO buscar(@PathVariable Long id) {
         Sesione sesion = sesionServicio.findById(id);

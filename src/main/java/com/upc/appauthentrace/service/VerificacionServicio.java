@@ -31,9 +31,9 @@ public class VerificacionServicio {
     private FirmaRepositorio firmaRepositorio;
 
     @Autowired
-    private ReporteServicio reporteServicio;
+    private ReporteVerificacionServicio reporteVerificacionServicio;
 
-    private static final double UMBRAL_SIMILITUD = 0.70; // Ajusta según precisión deseada
+    private static final double UMBRAL_SIMILITUD = 0.75;
 
     public ResultadoVerificacionDTO verificarFirma(Long idDocumento, Long idUsuario) {
         try {
@@ -77,7 +77,7 @@ public class VerificacionServicio {
 
             // Si no hay firma detectada
             if (firmaRect == null) {
-                reporteServicio.registrarReporte(idUsuario, idDocumento, "Vacio");
+                reporteVerificacionServicio.registrarReporteVerificacion(idUsuario, idDocumento, "Vacio");
                 return new ResultadoVerificacionDTO("No se detectó ninguna firma", 0, false);
             }
 
@@ -86,7 +86,7 @@ public class VerificacionServicio {
 
             List<Firma> firmas = firmaRepositorio.findAll();
             if (firmas.isEmpty()) {
-                reporteServicio.registrarReporte(idUsuario, idDocumento, "No válida");
+                reporteVerificacionServicio.registrarReporteVerificacion(idUsuario, idDocumento, "No válida");
                 return new ResultadoVerificacionDTO("No hay firmas registradas en la base de datos", 0, false);
             }
 
@@ -108,7 +108,7 @@ public class VerificacionServicio {
             String estadoFirma = firmaValida ? "Válido" : "No válido";
 
             // Registrar reporte
-            reporteServicio.registrarReporte(idUsuario, idDocumento, estadoFirma);
+            reporteVerificacionServicio.registrarReporteVerificacion(idUsuario, idDocumento, estadoFirma);
 
             return new ResultadoVerificacionDTO(mensaje, porcentaje, firmaValida);
 

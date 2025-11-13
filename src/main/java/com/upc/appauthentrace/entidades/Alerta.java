@@ -1,5 +1,6 @@
 package com.upc.appauthentrace.entidades;
 
+import com.upc.appauthentrace.security.entities.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +35,7 @@ public class Alerta {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
-    private Usuario usuarioAfectado;
+    private User usuarioAfectado;
     // Puede ser null si la alerta no está asociada a un usuario específico
 
     @Column(name = "ip_origen", length = 45)
