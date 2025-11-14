@@ -17,4 +17,5 @@ public class SesionDTO {
     private LocalDate fechaFin;
     private String ipOrigen;
     private String navegador;
+    private String rol;
 }

@@ -35,4 +35,8 @@ public class Sesione {
     @Column(name = "navegador", nullable = false, length = 100)
     private String navegador;
 
+    @Column(name = "rol", length = 100)
+    private String rol;
+
+
 }
