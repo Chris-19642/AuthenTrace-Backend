@@ -4,6 +4,7 @@ import com.upc.appauthentrace.dto.SesionDTO;
 import com.upc.appauthentrace.entidades.Sesione;
 import com.upc.appauthentrace.interfaces.ISesionServicio;
 import com.upc.appauthentrace.repositorios.SesionRepositorio;
+import com.upc.appauthentrace.security.entities.Role;
 import com.upc.appauthentrace.security.entities.User;
 import com.upc.appauthentrace.security.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -64,6 +65,11 @@ public class SesionServicio implements ISesionServicio {
                 .map(sesion -> {
                     SesionDTO dto = modelMapper.map(sesion, SesionDTO.class);
                     dto.setIdUsuario(sesion.getIdUsuario().getIdUsuario());
+                    String rol = sesion.getIdUsuario().getRoles().stream()
+                            .findFirst()
+                            .map(Role::getName)
+                            .orElse("SIN_ROL");
+                    dto.setRol(rol);
                     return dto;
                 })
                 .collect(Collectors.toList());
