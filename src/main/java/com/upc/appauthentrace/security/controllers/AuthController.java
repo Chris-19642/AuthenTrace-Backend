@@ -47,11 +47,17 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
+        Long userId = userDetailsService
+                .getUserByUsername(authRequest.getUsername())
+                .getIdUsuario();
+
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Authorization", token);
+
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setRoles(roles);
         authResponseDTO.setJwt(token);
+        authResponseDTO.setIdUsuario(userId);
         return ResponseEntity.ok().headers(responseHeaders).body(authResponseDTO);
     }
 }
