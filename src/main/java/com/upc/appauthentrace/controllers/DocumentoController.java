@@ -18,7 +18,7 @@ public class DocumentoController {
 
     // 1. Subir temporal
     @PostMapping("/subir")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasRole('USER')")
     public String subirDocumentoTemporal(@RequestParam("file") MultipartFile file) {
         return documentoServicio.subirDocumentoTemporal(file);
     }

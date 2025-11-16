@@ -14,7 +14,7 @@ import java.time.Instant;
 public class DocumentoDTO {
     private Long id;
     private Long idUsuario;
-    private String nombre;
+    private String nombreArchivo;
     private String tipoDocumento;
     private String rutaArchivo;
     private Instant fechaSubida;

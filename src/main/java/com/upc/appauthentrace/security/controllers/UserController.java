@@ -59,6 +59,7 @@ public class UserController {
 
     // Editar perfil (usuario)
     @PutMapping("/perfil/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserDTO> editarPerfil(@PathVariable Long idUsuario, @RequestBody UserDTO userDTO) {
         userDTO.setIdUsuario(idUsuario);
         return ResponseEntity.ok(userService.editarPerfilUsuario(userDTO));
