@@ -1,9 +1,11 @@
 package com.upc.appauthentrace.interfaces;
 
 import com.upc.appauthentrace.dto.ActualizacionDTO;
-import com.upc.appauthentrace.entidades.Actualizacion;
-import com.upc.appauthentrace.entidades.Usuario;
+
+import java.util.List;
 
 public interface IActualizacionServicio {
-    Actualizacion programarActualizacion(ActualizacionDTO dto, Usuario usuario);
+    public ActualizacionDTO programarActualizacion(ActualizacionDTO dto);
+    public List<ActualizacionDTO> listarActualizaciones();
+
 }

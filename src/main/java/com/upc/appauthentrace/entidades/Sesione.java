@@ -1,11 +1,11 @@
 package com.upc.appauthentrace.entidades;
 
+import com.upc.appauthentrace.security.entities.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
@@ -20,7 +20,7 @@ public class Sesione {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario idUsuario;
+    private User idUsuario;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "fecha_inicio", nullable = false)
@@ -34,5 +34,9 @@ public class Sesione {
 
     @Column(name = "navegador", nullable = false, length = 100)
     private String navegador;
+
+    @Column(name = "rol", length = 100)
+    private String rol;
+
 
 }

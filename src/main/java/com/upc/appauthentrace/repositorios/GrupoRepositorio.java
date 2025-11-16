@@ -1,7 +1,6 @@
 package com.upc.appauthentrace.repositorios;
 
 import com.upc.appauthentrace.entidades.Grupo;
-import com.upc.appauthentrace.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

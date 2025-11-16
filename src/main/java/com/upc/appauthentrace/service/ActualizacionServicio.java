@@ -2,13 +2,15 @@ package com.upc.appauthentrace.service;
 
 import com.upc.appauthentrace.dto.ActualizacionDTO;
 import com.upc.appauthentrace.entidades.Actualizacion;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IActualizacionServicio;
 import com.upc.appauthentrace.repositorios.ActualizacionRepositorio;
+import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
+import java.util.List;
+
 
 @Service
 public class ActualizacionServicio implements IActualizacionServicio {
@@ -16,18 +18,21 @@ public class ActualizacionServicio implements IActualizacionServicio {
     @Autowired
     private ActualizacionRepositorio actualizacionRepositorio;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Transactional
     @Override
-    public Actualizacion programarActualizacion(ActualizacionDTO dto, Usuario usuario) {
-        if (usuario.getRol() == null || !usuario.getRol().getNombreRol().equalsIgnoreCase("ADMIN")) {
-            try {
-                throw new AccessDeniedException("Solo administradores pueden programar actualizaciones");
-            } catch (AccessDeniedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        Actualizacion actualizacion = new Actualizacion();
-        actualizacion.setVersion(dto.getVersion());
-        actualizacion.setFechaProgramada(dto.getFechaProgramada());
-        return actualizacionRepositorio.save(actualizacion);
+    public ActualizacionDTO programarActualizacion(ActualizacionDTO dto) {
+        Actualizacion actualizacion = modelMapper.map(dto,Actualizacion.class);
+        return modelMapper.map(actualizacionRepositorio.save(actualizacion),ActualizacionDTO.class); //map(actualizacionRepositorio.save(actualizacion), ActualizacionDTO.class);
+    }
+
+    @Override
+    public List<ActualizacionDTO> listarActualizaciones() {
+        return actualizacionRepositorio.findAll()
+                .stream()
+                .map(a -> modelMapper.map(a, ActualizacionDTO.class))
+                .toList();
     }
 }

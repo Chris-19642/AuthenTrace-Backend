@@ -3,19 +3,15 @@ package com.upc.appauthentrace.service;
 import com.upc.appauthentrace.dto.IntentoFallidoDTO;
 import com.upc.appauthentrace.entidades.Intentosfallido;
 import com.upc.appauthentrace.entidades.Sesione;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IIntentoFallidoServicio;
 import com.upc.appauthentrace.repositorios.IntentoFallidoRepositorio;
-import com.upc.appauthentrace.repositorios.UsuarioRepositorio;
+import com.upc.appauthentrace.security.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class IntentoFallidoServicio implements IIntentoFallidoServicio {
@@ -27,7 +23,7 @@ public class IntentoFallidoServicio implements IIntentoFallidoServicio {
     private ModelMapper modelMapper;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private UserRepository userRepository;
 
     @Override
     public IntentoFallidoDTO registrarIntento(IntentoFallidoDTO intentoFallidoDTO) {

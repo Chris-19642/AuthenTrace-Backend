@@ -18,14 +18,14 @@ public class DocumentoController {
 
     // 1. Subir temporal
     @PostMapping("/subir")
-    @PreAuthorize("hasRole('USUARIO')")
+    @PreAuthorize("hasRole('USER')")
     public String subirDocumentoTemporal(@RequestParam("file") MultipartFile file) {
         return documentoServicio.subirDocumentoTemporal(file);
     }
 
     // 2. Cancelar temporal (botón X)
     @DeleteMapping("/cancelar/{nombreArchivo}")
-    @PreAuthorize("hasRole('USUARIO')")
+    @PreAuthorize("hasRole('USER')")
     public String cancelarDocumentoTemporal(@PathVariable String nombreArchivo) {
         boolean eliminado = documentoServicio.cancelarDocumentoTemporal(nombreArchivo);
         return eliminado ? "Archivo eliminado" : "No existía el archivo";
@@ -34,14 +34,14 @@ public class DocumentoController {
 
     // 3. Guardar definitivo al verificar firma
     @PostMapping("/guardar/{idUsuario}")
-    @PreAuthorize("hasRole('USUARIO')")
+    @PreAuthorize("hasRole('USER')")
     public DocumentoDTO guardarDefinitivo(@RequestParam String nombreArchivo,
                                           @PathVariable Long idUsuario) {
         return documentoServicio.guardarDefinitivo(nombreArchivo, idUsuario);
     }
 
     // Listados
-    @GetMapping
+    @GetMapping("/lista")
     public List<DocumentoDTO> listar() {
         return documentoServicio.listarDocumentos();
     }
@@ -51,10 +51,11 @@ public class DocumentoController {
         return documentoServicio.listarPorUsuario(idUsuario);
     }
 
-    // Eliminar desde BD (documento ya confirmado)
+    // Eliminar documento definitivo
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
+    public String eliminar(@PathVariable Long id) {
         documentoServicio.eliminarDocumento(id);
+        return "Documento eliminado correctamente";
     }
 }
 

@@ -1,5 +1,6 @@
 package com.upc.appauthentrace.entidades;
 
+import com.upc.appauthentrace.security.entities.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ public class Grupo {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario idUsuario;
+    private User idUsuario;
 
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;

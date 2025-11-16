@@ -35,4 +35,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .authorities(authorities)
                 .build();
     }
+    public Long getIdUsuarioByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return user.getIdUsuario(); // Ajusta según el nombre de tu campo (getId(), getIdUsuario(), etc.)
+    }
 }

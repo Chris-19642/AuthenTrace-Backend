@@ -2,10 +2,10 @@ package com.upc.appauthentrace.service;
 
 import com.upc.appauthentrace.dto.AlertaDTO;
 import com.upc.appauthentrace.entidades.Alerta;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IAlertaServicio;
 import com.upc.appauthentrace.repositorios.AlertaRepositorio;
-import com.upc.appauthentrace.repositorios.UsuarioRepositorio;
+import com.upc.appauthentrace.security.entities.User;
+import com.upc.appauthentrace.security.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,11 @@ public class AlertaServicio implements IAlertaServicio {
     private AlertaRepositorio alertaRepositorio;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private UserRepository userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
+
 
     @Override
     public Alerta findById(Long id) {
@@ -38,9 +39,9 @@ public class AlertaServicio implements IAlertaServicio {
 
         // Si viene idUsuario, lo buscamos y lo asignamos
         if (alertaDTO.getIdUsuario() != null) {
-            Usuario usuario = usuarioRepositorio.findById(alertaDTO.getIdUsuario())
+            User user = userRepository.findById(alertaDTO.getIdUsuario())
                     .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID " + alertaDTO.getIdUsuario()));
-            alerta.setUsuarioAfectado(usuario);
+            alerta.setUsuarioAfectado(user);
         }
 
         // Asignar fecha actual si no viene en el DTO

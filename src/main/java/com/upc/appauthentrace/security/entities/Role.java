@@ -18,4 +18,9 @@ public class Role {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    // Constructor necesario para crear roles nuevos
+    public Role(String name) {
+        this.name = name;
+    }
 }

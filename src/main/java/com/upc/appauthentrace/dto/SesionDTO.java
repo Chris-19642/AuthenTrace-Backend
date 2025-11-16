@@ -1,14 +1,9 @@
 package com.upc.appauthentrace.dto;
 
-import com.upc.appauthentrace.entidades.Usuario;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
@@ -22,4 +17,5 @@ public class SesionDTO {
     private LocalDate fechaFin;
     private String ipOrigen;
     private String navegador;
+    private String rol;
 }

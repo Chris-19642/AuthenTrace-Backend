@@ -2,9 +2,9 @@ package com.upc.appauthentrace.service;
 
 import com.upc.appauthentrace.dto.GrupoDTO;
 import com.upc.appauthentrace.entidades.Grupo;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IGrupoServicio;
 import com.upc.appauthentrace.repositorios.GrupoRepositorio;
+import com.upc.appauthentrace.security.entities.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ public class GrupoServicio implements IGrupoServicio {
     public GrupoDTO crearGrupo(GrupoDTO grupoDTO) {
         Grupo grupo = modelMapper.map(grupoDTO, Grupo.class);
 
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(grupoDTO.getIdUsuario());
-        grupo.setIdUsuario(usuario);
+        User user = new User();
+        user.setIdUsuario(grupoDTO.getIdUsuario());
+        grupo.setIdUsuario(user);
 
         Grupo guardado = grupoRepositorio.save(grupo);
         return modelMapper.map(guardado, GrupoDTO.class);

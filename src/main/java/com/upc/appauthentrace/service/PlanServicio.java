@@ -16,7 +16,6 @@ public class PlanServicio {
     public List<Plan> obtenerPlanes(){
         return planRepositorio.findAll();
     }
-
     public Plan guardarPlan(Plan plan){
         return planRepositorio.save(plan);
     }

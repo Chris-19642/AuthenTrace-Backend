@@ -2,10 +2,10 @@ package com.upc.appauthentrace.service;
 
 import com.upc.appauthentrace.dto.DocumentoDTO;
 import com.upc.appauthentrace.entidades.Documento;
-import com.upc.appauthentrace.entidades.Usuario;
 import com.upc.appauthentrace.interfaces.IDocumentoServicio;
 import com.upc.appauthentrace.repositorios.DocumentoRepositorio;
-import com.upc.appauthentrace.repositorios.UsuarioRepositorio;
+import com.upc.appauthentrace.security.entities.User;
+import com.upc.appauthentrace.security.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class DocumentoServicio implements IDocumentoServicio {
     private DocumentoRepositorio documentoRepositorio;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private UserRepository userRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -45,7 +45,7 @@ public class DocumentoServicio implements IDocumentoServicio {
             Path ruta = Paths.get(TEMP_DIR + nombreArchivo);
 
             Files.write(ruta, file.getBytes());
-            return nombreArchivo; // solo se devuelve el nombre para luego decidir
+            return nombreArchivo; // solo se devuelve el nombre temporal
         } catch (IOException e) {
             throw new RuntimeException("Error al guardar el archivo temporal", e);
         }
@@ -75,15 +75,17 @@ public class DocumentoServicio implements IDocumentoServicio {
             Path rutaFinal = Paths.get(UPLOAD_DIR + nombreArchivo);
             Files.move(rutaTemp, rutaFinal); // mover archivo
 
-            Usuario usuario = usuarioRepositorio.findById(idUsuario)
+            User user = userRepository.findById(idUsuario)
                     .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
             Documento documento = new Documento();
-            documento.setUsuario(usuario);
-            documento.setNombre(nombreArchivo);
-            documento.setTipoDocumento(Files.probeContentType(rutaFinal));
+            documento.setUsuario(user);
+            documento.setNombre(nombreArchivo.substring(nombreArchivo.indexOf("_") + 1)); // nombre original
+            String tipo = Files.probeContentType(rutaFinal);
+            documento.setTipoDocumento(tipo != null ? tipo : "application/pdf");
             documento.setRutaArchivo(rutaFinal.toString());
             documento.setFechaSubida(Instant.now());
+
 
             Documento guardado = documentoRepositorio.save(documento);
             return modelMapper.map(guardado, DocumentoDTO.class);
@@ -109,6 +111,14 @@ public class DocumentoServicio implements IDocumentoServicio {
 
     @Override
     public void eliminarDocumento(Long idDocumento) {
+
+        Documento doc = documentoRepositorio.findById(idDocumento)
+                .orElseThrow(() -> new RuntimeException("Documento no encontrado"));
+        try {
+            Files.deleteIfExists(Paths.get(doc.getRutaArchivo()));
+        } catch (IOException e) {
+            throw new RuntimeException("Error al eliminar archivo físico", e);
+        }
         documentoRepositorio.deleteById(idDocumento);
     }
 }
