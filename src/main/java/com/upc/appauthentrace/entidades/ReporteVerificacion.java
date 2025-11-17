@@ -40,5 +40,4 @@ public class ReporteVerificacion {
 
     @Column(name = "ruta_reporte")
     private String rutaReporte;
-
 }

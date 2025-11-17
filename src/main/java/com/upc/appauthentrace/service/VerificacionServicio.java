@@ -172,5 +172,4 @@ public class VerificacionServicio {
 
         return Math.max(0, Math.min(similitud, 1));
     }
-
 }

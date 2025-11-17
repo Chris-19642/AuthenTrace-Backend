@@ -53,6 +53,7 @@ public class DocumentoController {
 
     // Eliminar documento definitivo
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String eliminar(@PathVariable Long id) {
         documentoServicio.eliminarDocumento(id);
         return "Documento eliminado correctamente";
