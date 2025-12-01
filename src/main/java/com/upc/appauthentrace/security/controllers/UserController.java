@@ -26,6 +26,12 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER')")
+    public ResponseEntity<User> obtenerUsuario(@PathVariable("id") Long idUsuario) {
+        return ResponseEntity.ok(userService.findById(idUsuario));
+    }
+
     //Este registar se hace desde el frontend (crear cuenta)
     @PostMapping("/registro")
     public ResponseEntity<UserDTO> registrar(@RequestBody UserDTO userDTO) {
@@ -39,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("buscar/{id}")
-    public UserDTO buscar(@PathVariable Long idUsuario) {
+    public UserDTO buscar(@PathVariable ("id") Long idUsuario) {
         User user = userService.findById(idUsuario);
         if (user == null) {
             return null;
