@@ -42,17 +42,20 @@ public class DocumentoController {
 
     // Listados
     @GetMapping("/lista")
+    @PreAuthorize("hasRole('USER')")
     public List<DocumentoDTO> listar() {
         return documentoServicio.listarDocumentos();
     }
 
     @GetMapping("/usuario/{idUsuario}")
+    @PreAuthorize("hasRole('USER')")
     public List<DocumentoDTO> listarPorUsuario(@PathVariable Long idUsuario) {
         return documentoServicio.listarPorUsuario(idUsuario);
     }
 
     // Eliminar documento definitivo
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public String eliminar(@PathVariable Long id) {
         documentoServicio.eliminarDocumento(id);
         return "Documento eliminado correctamente";
